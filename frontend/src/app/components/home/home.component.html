@@ -1,0 +1,29 @@
+<div class="parent">
+  <h2>Recipe's List</h2>
+  <div class="row">
+
+    <mat-card class="recipe-card btn" *ngFor="let recipe of recipes" >
+      <div (click)="showRecipe(recipe.id)">
+        <h3>{{recipe.name}}</h3>
+        <label>{{recipe.category==true ? 'Vegetarian Dish':'Non-Vegetarian Dish'}}</label>
+        <label>Serves : {{recipe.servings}}</label>
+      </div>
+      <div>
+        <button mat-stroked-button (click)="updateRecipe(recipe.id)">
+          <mat-icon aria-hidden="false" aria-label="Example point icon">edit</mat-icon>
+        </button>
+        <button mat-stroked-button (click)="deleteRecipe(recipe.id)">
+          <mat-icon aria-hidden="false" aria-label="Example point icon">delete</mat-icon>
+        </button>
+      </div>
+    </mat-card>
+
+    <mat-card (click)="addRecipe()" class="recipe-card btn">
+      <div class="center-margin">
+        <mat-icon aria-hidden="false" aria-label="Example point icon">control_point</mat-icon>
+        <h3>Add New Recipe</h3>
+      </div>
+    </mat-card>
+  </div>
+
+</div>

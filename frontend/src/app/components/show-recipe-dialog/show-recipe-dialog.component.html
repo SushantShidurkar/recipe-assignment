@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>{{recipe.name}}</h2>
+<div mat-dialog-content>
+<h4>Created On : {{recipe.created |date : 'dd-mm-yyyy HH:mm'}}</h4>
+<h4>Dish Category : {{recipe.category==true ? 'Vegetarian Dish':'Non-Vegetarian Dish'}}</h4>
+<h4>Serving : {{recipe.servings}} people</h4>
+<h4>Ingredients :</h4>
+<ul>
+    <li *ngFor="let ingredient of recipe.ingredients">
+      {{ingredient}}
+    </li>
+  </ul>
+  <h4 class="b">Cooking instruction :</h4>
+  <p >{{recipe.instructions}}</p>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="">Close</button>
+  </div>

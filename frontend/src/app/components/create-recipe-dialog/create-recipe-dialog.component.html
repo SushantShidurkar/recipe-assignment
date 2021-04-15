@@ -1,0 +1,52 @@
+<h2 mat-dialog-title>{{operation}} Recipe</h2>
+
+<div mat-dialog-content [formGroup]="form">
+  <div *ngIf="recipe.hasOwnProperty('id')">
+    <label>Id : {{recipe.id}}</label><br>
+    <label>Created on : {{recipe.created |date : 'dd-mm-yyyy HH:mm'}}</label>
+  </div>
+    <mat-form-field>
+        <mat-label>Name of the Recipe</mat-label>
+        <input matInput [(ngModel)]="recipe.name" formControlName="name">
+        
+    </mat-form-field>
+    
+    <br>
+    <mat-label>Category : </mat-label><br>
+    <mat-radio-group ngDefaultControl aria-label="Select an option" [(ngModel)]="recipe.category" formControlName="category">
+        <mat-radio-button  [value]="true" value="true">Vegetarian Dish</mat-radio-button>
+        <mat-radio-button [value]="false" value="false">Non-Vegetarian Dish</mat-radio-button>
+    </mat-radio-group>
+    <br>
+    <mat-form-field>
+        <mat-label>Servings</mat-label>
+        <input type="number" min="1" max="15" [(ngModel)]="recipe.servings" matInput formControlName="servings">
+    </mat-form-field>
+    <br>
+    
+<h3>Ingredients:</h3>
+  <ul>
+    <li *ngFor="let ingredient of recipe.ingredients">
+      {{ingredient}}
+      <button (click)="removeIngredient(ingredient)" mat-stroked-button style="line-height: 25px;">
+        <mat-icon aria-hidden="false" aria-label="Example point icon">delete</mat-icon>
+      </button>
+    </li>
+  </ul>
+  <mat-form-field>
+    <mat-label>Add Ingredients</mat-label>
+    <input id="ingredient" #ingredient matInput value="Oil" formControlName="ingredients">
+  </mat-form-field><button (click)="addIngredient(ingredient.value); ingredient.value=''" mat-stroked-button style="line-height: 25px;">
+    <mat-icon aria-hidden="false" aria-label="Example point icon">control_point</mat-icon>
+  </button>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Cooking Instructions</mat-label>
+        <textarea matInput [(ngModel)]="recipe.instructions" formControlName="instructions"></textarea>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="save()" [disabled]="form.status !== 'VALID'">Save</button>
+    <button mat-button [mat-dialog-close]="">Cancel</button>
+  </div>
+  <!-- [disabled]="form.status !== 'VALID'" -->
