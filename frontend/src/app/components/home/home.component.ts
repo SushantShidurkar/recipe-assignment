@@ -31,12 +31,12 @@ export class HomeComponent implements OnInit {
   getRecipesList(): void {
     this.apiService.getRecipes().subscribe(
       (response) => {
-        console.log('response received')
+        
         this.recipes = response;
       },
       (error) => {
-        console.error('Request failed with error')
-        console.log(error);
+        console.error('Request failed with error');
+        
       });
   }
   addRecipe(): void {
@@ -62,7 +62,6 @@ export class HomeComponent implements OnInit {
             errorsArray.forEach(element => {
               message += element;
               message += ". ";
-              console.log(message);
               i++;
               if (i == errorsArray.length) {
                 this.openSnackBar(message);
@@ -92,7 +91,6 @@ export class HomeComponent implements OnInit {
             errorsArray.forEach(element => {
               message += element;
               message += ". ";
-              console.log(message);
               i++;
               if (i == errorsArray.length) {
                 this.openSnackBar(message);
@@ -112,7 +110,7 @@ export class HomeComponent implements OnInit {
       this.openDialog(2, this.modelToDto(recipe));
     },
       (error) => {
-        console.log(error);
+        
         this.openSnackBar("Something went wrong");
       }
 
@@ -125,7 +123,6 @@ export class HomeComponent implements OnInit {
       this.openDialog(3, this.modelToDto(recipe));
     },
       (error) => {
-        console.log(error);
         this.openSnackBar("Something went wrong");
       }
 
@@ -140,7 +137,7 @@ export class HomeComponent implements OnInit {
       this.getRecipesList();
     },
       (error) => {
-        console.log(error);
+        
         this.openSnackBar("Error in deleting. Please try again");
       }
 
@@ -184,7 +181,7 @@ export class HomeComponent implements OnInit {
         data => {
         },
         error => {
-          console.log(error);
+          
         }
 
       );
@@ -193,13 +190,13 @@ export class HomeComponent implements OnInit {
       dialogRef.afterClosed().subscribe(
         data => {
           if (data != null) {
-            console.log("Dialog output:", data);
+            
             this.saveOrUpdateRecipe(data);
           }
 
         },
         error => {
-          console.log(error);
+          
         }
 
       );

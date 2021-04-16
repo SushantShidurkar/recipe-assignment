@@ -21,21 +21,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.recipe.backend.dto.RecipeDTO;
 import com.recipe.backend.service.RecipeService;
 
+
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class RecipeController {
 
 	Logger logger= LoggerFactory.getLogger(RecipeController.class);
+	
 	@Autowired
 	RecipeService recipeService;
 
-
+	
 	@GetMapping("/recipes")
 	public ResponseEntity<List<RecipeDTO>> getAllRecipes(){
 		logger.info("getAllRecipe called.");
 		return new ResponseEntity<>(recipeService.getAllRecipes(),HttpStatus.OK);
 	}
-
+	
 	@GetMapping("/recipes/{recipeId}")
 	public ResponseEntity<RecipeDTO> getRecipe(@PathVariable("recipeId") Long id){
 		logger.info("getRecipe called.");
@@ -47,7 +50,7 @@ public class RecipeController {
 			throw new NoSuchElementException();
 		}
 	}
-
+	
 	@DeleteMapping("/recipes/{recipeId}")  
 	public ResponseEntity<String> deleteRecipe(@PathVariable("recipeId") Long id){
 		logger.info("deleteRecipe called.");
@@ -60,7 +63,7 @@ public class RecipeController {
 		}
 
 	}
-
+	
 	@PostMapping("/recipes")  
 	public ResponseEntity<String> createRecipe(@Valid @RequestBody RecipeDTO recipeDTO)  
 	{  
@@ -73,7 +76,7 @@ public class RecipeController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
 		}
 	}
-
+	
 	@PutMapping("/recipes")  
 	public ResponseEntity<RecipeDTO> updateRecipe(@Valid @RequestBody RecipeDTO recipeDTO)   
 	{  
