@@ -38,21 +38,24 @@ public class RecipeController {
 
 	@GetMapping("/recipes/{recipeId}")
 	public ResponseEntity<RecipeDTO> getRecipe(@PathVariable("recipeId") Long id){
+		logger.info("getRecipe called.");
 		if(id!=null) {
 			RecipeDTO recipeDto=recipeService.getRecipe(id);
 			return new ResponseEntity<>(recipeDto,HttpStatus.OK);
 		}else {
+			logger.error("Error in getRecipe");
 			throw new NoSuchElementException();
 		}
 	}
 
 	@DeleteMapping("/recipes/{recipeId}")  
 	public ResponseEntity<String> deleteRecipe(@PathVariable("recipeId") Long id){
-
+		logger.info("deleteRecipe called.");
 		if(id!=null) {
 			recipeService.deleteRecipe(id);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}else {
+			logger.error("Error in delete recipe");
 			return new ResponseEntity<>("Please provide valid input",HttpStatus.BAD_REQUEST);
 		}
 
@@ -61,17 +64,28 @@ public class RecipeController {
 	@PostMapping("/recipes")  
 	public ResponseEntity<String> createRecipe(@Valid @RequestBody RecipeDTO recipeDTO)  
 	{  
-		recipeService.createRecipe(recipeDTO);  
-		return new ResponseEntity<>(HttpStatus.OK);  
+		logger.info("createRecipe called.");
+		if(null==recipeDTO.getId()) {
+			recipeService.createRecipe(recipeDTO);  
+			return new ResponseEntity<>(HttpStatus.OK); 
+		}else {
+			logger.error("Id found in create recipe.");
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
+		}
 	}
 
 	@PutMapping("/recipes")  
 	public ResponseEntity<RecipeDTO> updateRecipe(@Valid @RequestBody RecipeDTO recipeDTO)   
 	{  
-		
-		RecipeDTO recipeDto=recipeService.updateRecipe(recipeDTO);
-		return new ResponseEntity<>(recipeDto,HttpStatus.OK);
-
+		logger.info("updateRecipe called.");
+		RecipeDTO recipeDto=new RecipeDTO();
+		if(null!=recipeDTO.getId()) {
+			recipeDto=recipeService.updateRecipe(recipeDTO);
+			return new ResponseEntity<>(recipeDto,HttpStatus.OK);
+		}else {
+			logger.error("Id not found in update recipe.");
+			return new ResponseEntity<>(recipeDto,HttpStatus.BAD_REQUEST);
+		}
 	} 
 
 }

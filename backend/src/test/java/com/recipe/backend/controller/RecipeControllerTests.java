@@ -104,7 +104,6 @@ class RecipeControllerTests {
 	void givenRecipe_whenGetRecipe2_thenStatus404() throws Exception {
 		mockMvc.perform(get("/recipes/null").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest())
 		.andExpect(result -> assertTrue(result.getResolvedException() instanceof MethodArgumentTypeMismatchException));
-//		.andExpect(result -> assertEquals("Please provide integer value greater than zero", result.getResolvedException().getMessage()));
 
 	}
 
@@ -127,6 +126,18 @@ class RecipeControllerTests {
 				.content(json)
 				.contentType(MediaType.APPLICATION_JSON))
 		.andExpect(status().isOk());
+	}
+	
+	@Test
+	@DisplayName("Test create Recipe Failure")
+	void testCreateRecipeCheckFailure() throws Exception {
+		Recipe recipe1 = recipe;
+		recipe1.setId(1L);
+        String json = getObjectMapper().writeValueAsString(recipe1);
+		mockMvc.perform(post("/recipes")
+				.content(json)
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().isBadRequest());
 	}
 	
 	@Test
@@ -155,6 +166,20 @@ class RecipeControllerTests {
 	}
 	
 	@Test
+	@DisplayName("Test update Recipe Failure")
+	void testUpdateRecipeFailure() throws Exception {
+		Recipe recipe1 = recipe;
+		recipe1.setId(null);
+		recipe1.setServings(4);
+        String json = getObjectMapper().writeValueAsString(recipe1);
+		mockMvc.perform(put("/recipes")
+				.content(json)
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().isBadRequest())
+		.andExpect(jsonPath("$.servings", is(0)));
+	}
+	
+	@Test
 	@DisplayName("Test delete recipe- Success") 
 	void givenRecipe_whenDeleteRecipe_thenStatus200() throws Exception { 
 		
@@ -165,6 +190,8 @@ class RecipeControllerTests {
 				.contentType(MediaType.APPLICATION_JSON))
 		.andExpect(status().isOk());
 	}
+	
+	
 
 
 	@Test
