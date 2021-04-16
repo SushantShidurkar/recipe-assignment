@@ -7,7 +7,7 @@
 - Application's GUI is responsive in nature.
 - Application's backend is developed in Spring Boot with restful architecture.
 - Application's backend has javadoc.
----
+
 ## Steps to run the application:
 - Download the source code of the application.
 - Go to "backend" folder ,and run ```mvn clean install``` command.
