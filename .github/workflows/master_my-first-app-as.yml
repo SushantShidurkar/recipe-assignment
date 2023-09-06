@@ -12,7 +12,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: /backend
     steps:
       - uses: actions/checkout@v2
 
@@ -20,9 +22,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '17'
-          
-      - name: Set location
-        run: cd backend
         
       - name: Check location
         run: pwd
@@ -34,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: '${{ github.workspace }}/backend/target/*.jar'
+          path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
