@@ -23,6 +23,9 @@ jobs:
           
       - name: Set location
         run: cd backend
+        
+      - name: Check location
+        run: pwd
        
       - name: Build with Maven
         run: mvn clean install
